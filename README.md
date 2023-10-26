@@ -3,6 +3,7 @@ This app can show the weather in the city you entered, and will also change its 
 
 Also, this app is a Progressive Web App, meaning you can install it on your computer or phone and use it right from your home screen
 
+![image](https://github.com/Wozgard/weather_pwa/assets/85787438/44e257c3-2eb4-4470-b4ba-bd9aaeaa7efb)
 
 
 
