@@ -1,10 +1,17 @@
 import { useState } from "react";
 import "./App.css";
 import { fetchWeather } from "./api/fetchWeather";
+import { fetchPhotos } from "./api/featchBG";
 
-function App() {
+const defaultBackground = './images/bg.jpg'
+
+function App() { 
   const [query, setQuery] = useState("");
-  const [weather, setWeather] = useState({});
+  const [background, setBackground] = useState(defaultBackground);
+  const [weather, setWeather] = useState({
+    name: "",
+    weather: [{description: ""}],
+  });
   const [weatherNotFound, setWeatherNotFound] = useState(false);
 
   const search = async (e) => {
@@ -14,8 +21,10 @@ function App() {
       if (res.status === 200) {
         setWeatherNotFound(false);
         setWeather(res.data);
-      }
-      else {
+        const queryBG = query + " " + res.data.name + " " + res.data.weather[0].description;
+        const bg = await fetchPhotos(queryBG);
+        setBackground(bg);
+      } else {
         setWeather({});
         setWeatherNotFound(true);
       }
@@ -23,7 +32,15 @@ function App() {
     }
   };
   return (
-    <div className="main-container">
+    <div
+      className="main-container"
+      style={{
+        background: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.418)), url(${background}) 0 0/cover no-repeat`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <input
         type="text"
         className="search"
